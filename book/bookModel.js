@@ -1,11 +1,11 @@
 let library = [];
-let currentID = 0;
+let currentID = 1;
 
 module.exports = class Book {
     constructor(author, title) {
         this.author = author;
         this.title = title;
-        this._id = currentID;
+        this._id = currentID++;
     }
     get id() {
         return this._id;
@@ -13,16 +13,9 @@ module.exports = class Book {
     static getAllBooks() {
         return library;
     }
-    static getByAuthor(author) {
+    static getByID(id) {
         for (let book of library) {
-            if (book.author === author) {
-                return book;
-            }
-        }
-    }
-    static getByTitle(title) {
-        for (let book of library) {
-            if (book.title === title) {
+            if (book.id === id) {
                 return book;
             }
         }
@@ -30,14 +23,21 @@ module.exports = class Book {
     static save(book) {
         library.push(book);
     }
+    static update(id, book) {
+        let currentBook = Book.getByID(id);
+        if (currentBook) {
+            currentBook.author = book.author;
+            currentBook.title = book.title;
+        }
+    }
     static remove(id) {
         library = library.filter(book => book.id !== id)
     }
-    static has(author, title) {
-        return Boolean(Book.getByAuthor(author) && Book.getByTitle(title));
+    static has(id) {
+        return Boolean(Book.getByID(id));
     }
-    static isValid(book){
-        if(book.author === undefined || book.author === '' || book.title === undefined || book.title === ''){
+    static isValid(book) {
+        if (book.author === undefined || book.author === '' || book.title === undefined || book.title === '') {
             return false;
         } else {
             return true;
