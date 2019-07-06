@@ -10,7 +10,7 @@ function readHTML(result, response) {
     fs.createReadStream('./book/book.html', 'utf8')
         .on('data', (chunk) => data += chunk)
         .on('end', () => {
-            data.replace('{result}', result);
+            data = data.replace('{result}', result);
             response.write(data);
             response.end();
         });
