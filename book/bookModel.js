@@ -1,4 +1,4 @@
-let library = [];
+let library = []; //storage
 let currentID = 1;
 
 module.exports = class Book {
